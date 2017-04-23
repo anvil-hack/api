@@ -19,8 +19,10 @@ var phone;
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
 
-const playTrack = function(track) {
+const playTrack = function (track) {
     var request = require('request');
+
+    console.log(track);
 
     var headers = {
         'Accept': 'application/json',
@@ -46,7 +48,7 @@ const playTrack = function(track) {
     request(options, callback);
 }
 
-const getSpotifyTrack = function(mood) {
+const getSpotifyTrack = function (mood) {
     var request = require('request');
 
     const tokenAuth = "Bearer BQCXautHi73YQL67Y9g74_F9KjIckARXBMEt6lkTs0mCnRFOkgaTiyZU-vXBAsApcB7TdRkNv5K7MWO2OQr3bGTvgt1wdp0v4EX70JGEVa0crTHCuMfnqSRfkWCgLtYNkYeTauMSg9jGvWkZOPEE4btmRsJvjOPavjYjOXn21mI0NVXoRpH9Pc9FPEb4FuaGMoeKk_c9e6KrlyX9URkXUNyVdWth_fZ6LmGy-MQMuA0BPM1VH1bL2FvIhoyZ-ZH1_fRPFpUCKD4xW4_B1QTrc_5CM2Vyli4FkJx5kok8vEXn6lrvWwyBY7rW4fBYDyI";
@@ -67,6 +69,7 @@ const getSpotifyTrack = function(mood) {
             playTrack(uri);
         }
     }
+
     request(options, callback);
 };
 
@@ -142,6 +145,10 @@ app.post('/analyse', function (req, res) {
     const username = req.body.username;
     const type = req.body.type;
 
+    getSpotifyTrack(0.5);
+    res.status(200).send("success");
+    return;
+
     if (!username) {
         res.status(401).send("error invalid arguments");
         return;
@@ -168,7 +175,7 @@ app.post('/capture', function (req, res) {
     messageCall = text;
     sendCall(phone);
     res.status(200).json('yeah');
- });
+});
 
 app.post('/exit', function (req, res) {
     const phone = req.body.phone;
