@@ -26,7 +26,7 @@ const playTrack = function (track) {
 
     var headers = {
         'Accept': 'application/json',
-        'Authorization': 'Bearer BQD-4wSiv403RRHnUxCWOGFNnuPL6Q-AuyZyJmqayDUvksrs97SigksXFDVtmBCoJ50ukzMJFvOf5buGw1O2G6aflTbvx8bU_xcHey1Nb12NT_cxw_VPQz1YXpxIP9wFwoFDn9nBETj9I-hNnONKzZE4eUQlZKRx3b0_1c78sKoZaluWCRDmWc6Gb_UBV1cIWfPqLqZhHp1tXp8N1bVne9EnOmJ4NvVMO13YYF4x_Rod0QpSgSdQrdRDvFacSYEn7P4Rj4I_lw7TbG9Sna5J_woIl_DM_fFcwt7f2JyM55VxBUljejwinP2gRO2J8xtBnA',
+        'Authorization': 'Bearer BQBjLdXuWpM0X1OSaKivY7n8q8gf-28EeP5EDjT5GsVPwNg16mDdqKH8oDf4ELDD_d5ZyUeEq8Hg_g3mK_eLQ3FI_awtObqOdyk-gCSYY1JowmXLB381Oe2Foa7BlGL1uh1wOQb3MIK_34W1ScgMPBlYkLGtC9uexk0MS4NvxDrEFprR07JAHLB0DpfWYe_uuffEcJUnVadOAV3v2Quwox-OzGXm9-AwSWbGi6GVaEcP5ts6hFWevorX0Eixgpz5h_aq905YtG3mf_pF0tpOae35C8tRkFkeaYCV_02xhCqlbsWn2zEosE5laOPoHSu5fg',
         'Content-Type': 'application/json'
     };
 
@@ -52,7 +52,7 @@ const playTrack = function (track) {
 const getSpotifyTrack = function (mood) {
     var request = require('request');
 
-    const tokenAuth = "Bearer BQD-4wSiv403RRHnUxCWOGFNnuPL6Q-AuyZyJmqayDUvksrs97SigksXFDVtmBCoJ50ukzMJFvOf5buGw1O2G6aflTbvx8bU_xcHey1Nb12NT_cxw_VPQz1YXpxIP9wFwoFDn9nBETj9I-hNnONKzZE4eUQlZKRx3b0_1c78sKoZaluWCRDmWc6Gb_UBV1cIWfPqLqZhHp1tXp8N1bVne9EnOmJ4NvVMO13YYF4x_Rod0QpSgSdQrdRDvFacSYEn7P4Rj4I_lw7TbG9Sna5J_woIl_DM_fFcwt7f2JyM55VxBUljejwinP2gRO2J8xtBnA";
+    const tokenAuth = "Bearer BQBjLdXuWpM0X1OSaKivY7n8q8gf-28EeP5EDjT5GsVPwNg16mDdqKH8oDf4ELDD_d5ZyUeEq8Hg_g3mK_eLQ3FI_awtObqOdyk-gCSYY1JowmXLB381Oe2Foa7BlGL1uh1wOQb3MIK_34W1ScgMPBlYkLGtC9uexk0MS4NvxDrEFprR07JAHLB0DpfWYe_uuffEcJUnVadOAV3v2Quwox-OzGXm9-AwSWbGi6GVaEcP5ts6hFWevorX0Eixgpz5h_aq905YtG3mf_pF0tpOae35C8tRkFkeaYCV_02xhCqlbsWn2zEosE5laOPoHSu5fg";
     var headers = {
         'Accept': 'application/json',
         'Authorization': tokenAuth
