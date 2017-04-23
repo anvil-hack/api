@@ -56,8 +56,8 @@ io.set('authorization', function (handshakeData, accept) {
 app.post('/twiml', function(req, res) {
     const twiml = new twilio.TwimlResponse();
     twiml.say('hello world!', { voice: 'alice' });
-    response.type('text/xml');
-    response.send(twiml.toString());
+    res.type('text/xml');
+    res.send(twiml.toString());
 });
 
 app.post('/analyse', function(req, res) {
