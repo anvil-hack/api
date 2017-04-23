@@ -36,7 +36,7 @@ const getSpotifyTrack = function(mood) {
     function callback(error, response, body) {
         const json = JSON.parse(body);
         if (json && json.tracks[0]) {
-            console.log(json.tracks[0].uri);
+            const uri = json.tracks[0].uri;
             if (connection) {
                 connection.emit("spotify", uri);
             }
@@ -116,9 +116,6 @@ app.post('/analyse', function (req, res) {
     phone = "+" + req.body.phone;
     const username = req.body.username;
     const type = req.body.type;
-
-    getSpotifyTrack(0.5);
-    res.status(200).send("success");
 
     if (!username) {
         res.status(401).send("error invalid arguments");
