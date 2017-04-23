@@ -1,0 +1,3 @@
+[submodule "image-learning"]
+	path = image-learning
+	url = https://remirobert@github.com/anvil-hack/rekognitionAmazon.git
