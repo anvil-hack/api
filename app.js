@@ -45,14 +45,17 @@ const sendCall = function (phone, message) {
 };
 
 const runScriptLearning = function () {
-    var child = require('child_process').execFile('path/to/script',
+    var child = require('child_process').execFile('./image-learning/amazonwebbucket.py',
         [
-            'arg1', 'arg2', 'arg3'
+            'happyman.jpg'
         ], function (err, stdout, stderr) {
             // Node.js will invoke this callback when the
+            console.log("stdout : ");
             console.log(stdout);
         });
-}
+};
+
+runScriptLearning();
 
 io.set('authorization', function (handshakeData, accept) {
     accept(null, true);
