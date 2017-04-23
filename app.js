@@ -26,7 +26,7 @@ const playTrack = function (track) {
 
     var headers = {
         'Accept': 'application/json',
-        'Authorization': 'Bearer BQA5bu9ICbAPq1Agqiqg-4DdwoyLO6u5e8MXyCHKy2rTFIXXX1Uph-n8GZ3E86wqnzTjqq3elEAa3DzzT4e5WVHd4yYshBHCTwfaMuuaG5RZZWQPVbUXXF73XteJKP6-XzZBXQM1RNsqTvusZ-BwL1eyB_hzrQHBUD_Nrhn1JBHQoRfNkeg3rTVP5bVRtUvt9JAmFmGeqf1E7Vbq8saDba3u_Iye-nf0jVWC3jHWTY3LH5EDXQpJo8tZhZI7OXGXLGbzqGQ1jEp2DAJWIBSVP_k7cjj8D0QrJcp0B_eg6Qqsv7EGwbSx3s7zSiK-eqj6AA',
+        'Authorization': 'Bearer BQD-4wSiv403RRHnUxCWOGFNnuPL6Q-AuyZyJmqayDUvksrs97SigksXFDVtmBCoJ50ukzMJFvOf5buGw1O2G6aflTbvx8bU_xcHey1Nb12NT_cxw_VPQz1YXpxIP9wFwoFDn9nBETj9I-hNnONKzZE4eUQlZKRx3b0_1c78sKoZaluWCRDmWc6Gb_UBV1cIWfPqLqZhHp1tXp8N1bVne9EnOmJ4NvVMO13YYF4x_Rod0QpSgSdQrdRDvFacSYEn7P4Rj4I_lw7TbG9Sna5J_woIl_DM_fFcwt7f2JyM55VxBUljejwinP2gRO2J8xtBnA',
         'Content-Type': 'application/json'
     };
 
@@ -52,7 +52,7 @@ const playTrack = function (track) {
 const getSpotifyTrack = function (mood) {
     var request = require('request');
 
-    const tokenAuth = "Bearer BQCXautHi73YQL67Y9g74_F9KjIckARXBMEt6lkTs0mCnRFOkgaTiyZU-vXBAsApcB7TdRkNv5K7MWO2OQr3bGTvgt1wdp0v4EX70JGEVa0crTHCuMfnqSRfkWCgLtYNkYeTauMSg9jGvWkZOPEE4btmRsJvjOPavjYjOXn21mI0NVXoRpH9Pc9FPEb4FuaGMoeKk_c9e6KrlyX9URkXUNyVdWth_fZ6LmGy-MQMuA0BPM1VH1bL2FvIhoyZ-ZH1_fRPFpUCKD4xW4_B1QTrc_5CM2Vyli4FkJx5kok8vEXn6lrvWwyBY7rW4fBYDyI";
+    const tokenAuth = "Bearer BQD-4wSiv403RRHnUxCWOGFNnuPL6Q-AuyZyJmqayDUvksrs97SigksXFDVtmBCoJ50ukzMJFvOf5buGw1O2G6aflTbvx8bU_xcHey1Nb12NT_cxw_VPQz1YXpxIP9wFwoFDn9nBETj9I-hNnONKzZE4eUQlZKRx3b0_1c78sKoZaluWCRDmWc6Gb_UBV1cIWfPqLqZhHp1tXp8N1bVne9EnOmJ4NvVMO13YYF4x_Rod0QpSgSdQrdRDvFacSYEn7P4Rj4I_lw7TbG9Sna5J_woIl_DM_fFcwt7f2JyM55VxBUljejwinP2gRO2J8xtBnA";
     var headers = {
         'Accept': 'application/json',
         'Authorization': tokenAuth
