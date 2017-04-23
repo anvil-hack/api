@@ -19,6 +19,33 @@ var phone;
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
 
+const playTrack = function(track) {
+    var request = require('request');
+
+    var headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer BQA5bu9ICbAPq1Agqiqg-4DdwoyLO6u5e8MXyCHKy2rTFIXXX1Uph-n8GZ3E86wqnzTjqq3elEAa3DzzT4e5WVHd4yYshBHCTwfaMuuaG5RZZWQPVbUXXF73XteJKP6-XzZBXQM1RNsqTvusZ-BwL1eyB_hzrQHBUD_Nrhn1JBHQoRfNkeg3rTVP5bVRtUvt9JAmFmGeqf1E7Vbq8saDba3u_Iye-nf0jVWC3jHWTY3LH5EDXQpJo8tZhZI7OXGXLGbzqGQ1jEp2DAJWIBSVP_k7cjj8D0QrJcp0B_eg6Qqsv7EGwbSx3s7zSiK-eqj6AA',
+        'Content-Type': 'application/json'
+    };
+
+    var dataString = '{"uris":[' + track + ']}';
+
+    var options = {
+        url: 'https://api.spotify.com/v1/me/player/play',
+        method: 'PUT',
+        headers: headers,
+        body: dataString
+    };
+
+    function callback(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body);
+        }
+    }
+
+    request(options, callback);
+}
+
 const getSpotifyTrack = function(mood) {
     var request = require('request');
 
@@ -37,9 +64,7 @@ const getSpotifyTrack = function(mood) {
         const json = JSON.parse(body);
         if (json && json.tracks[0]) {
             const uri = json.tracks[0].uri;
-            if (connection) {
-                connection.emit("spotify", uri);
-            }
+            playTrack(uri);
         }
     }
     request(options, callback);
