@@ -169,6 +169,16 @@ app.post('/capture', function (req, res) {
         res.status(401).send("error upload file");
         return;
     }
+
+    const result = text.split("\n");
+    if (result .length > 2) {
+        mood = result [0];
+        getSpotifyTrack(mood);
+    } else {
+        getSpotifyTrack(0.5);
+    }
+    console.log(result);
+
     messageCall = text;
     sendCall(phone);
     res.status(200).json('yeah');
