@@ -175,15 +175,9 @@ app.post('/capture', function (req, res) {
 });
 
 app.post('/exit', function (req, res) {
-    const phone = req.body.phone;
-    const username = req.body.username;
     console.log("exit");
-    if (!username) {
-        res.status(401).send("username missing");
-        return;
-    }
     if (connection) {
-        connection.emit("speech", "Goodbye " + username);
+        connection.emit("speech", "Goodbye Franco");
     }
     res.status(200).send("success");
 });
