@@ -145,14 +145,14 @@ app.post('/analyse', function (req, res) {
     phone = "+" + req.body.phone;
     const username = req.body.username;
     const type = req.body.type;
-    
+
     if (!username) {
         res.status(401).send("error invalid arguments");
         return;
     }
     if (connection) {
         if (type !== "onDemand") {
-            connection.emit("speech", "Hello " + username);
+            connection.emit("speech", "Welcome " + username);
         }
         connection.emit("captureFrame");
     }
@@ -183,7 +183,7 @@ app.post('/exit', function (req, res) {
         return;
     }
     if (connection) {
-        connection.emit("speech", "Aurevoir " + username);
+        connection.emit("speech", "Goodbye " + username);
     }
     res.status(200).send("success");
 });
