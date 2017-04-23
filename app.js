@@ -19,27 +19,29 @@ var phone;
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
 
-const getTracks = function () {
+const getSpotifyTrack = function(mood) {
     var request = require('request');
 
+    const tokenAuth = "Bearer BQCXautHi73YQL67Y9g74_F9KjIckARXBMEt6lkTs0mCnRFOkgaTiyZU-vXBAsApcB7TdRkNv5K7MWO2OQr3bGTvgt1wdp0v4EX70JGEVa0crTHCuMfnqSRfkWCgLtYNkYeTauMSg9jGvWkZOPEE4btmRsJvjOPavjYjOXn21mI0NVXoRpH9Pc9FPEb4FuaGMoeKk_c9e6KrlyX9URkXUNyVdWth_fZ6LmGy-MQMuA0BPM1VH1bL2FvIhoyZ-ZH1_fRPFpUCKD4xW4_B1QTrc_5CM2Vyli4FkJx5kok8vEXn6lrvWwyBY7rW4fBYDyI";
     var headers = {
         'Accept': 'application/json',
-        'Authorization': 'Bearer BQCiaIhAPm5PjsxlB6gUs7wmymaIUAZViSC3fe7anMD3m9dgdE2kZHFMLu0UKbfkWAKxsuy_iU633jux12rbpKVaWn43FCEcTEpXY2eiKM0IaYKeIicPGmCR0M8S4hglIj9EJImtlHWtXOdtnuwqxHeziDZa_RNF52dcIqSLBtPWE18Fn-hmK8gYSjG3VBzqYlVjb4hnR2jf1Le2Oq97ZXg5GtZzzb97N6bG4esB4LvmsSpdJtQ98h8ghXBCsXeN2pzoPDb_w07glPxczl4KYpR7dAWBDISHqYW9Jwi8rvh74ooTDLd-99A'
+        'Authorization': tokenAuth
     };
 
     var options = {
-        url: 'https://api.spotify.com/v1/recommendations?market=GB&seed_tracks=0c6xIDDpzE81m2q797ordA&seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical,country&limit=1&target_valence=0.5',
+        url: 'https://api.spotify.com/v1/recommendations?market=GB&min_popularity=80&seed_tracks=0c6xIDDpzE81m2q797ordA&seed_artists=4NHQUGzhtTLFvgF5SZesLK&limit=1&target_valence=' + mood,
         headers: headers
     };
 
     function callback(error, response, body) {
         const json = JSON.parse(body);
-        console.log(json.tracks[0].uri);
-        if (connection) {
-            connection.emit("spotify", uri);
+        if (json && json.tracks[0]) {
+            console.log(json.tracks[0].uri);
+            if (connection) {
+                connection.emit("spotify", uri);
+            }
         }
     }
-
     request(options, callback);
 };
 
@@ -85,10 +87,13 @@ const runScriptLearning = function (path) {
             if (stdout) {
                 const res = stdout.split("\n");
                 if (res.length > 2) {
+                    mood = res[0];
                     messageCall = res[1];
+                    getSpotifyTrack(mood);
                     connection.emit("speech", "Hello " + res[1]);
                 } else {
                     messageCall = res[0];
+                    getSpotifyTrack(0.5);
                     connection.emit("speech", "Hello " + res[0]);
                 }
                 console.log(res);
@@ -112,12 +117,17 @@ app.post('/analyse', function (req, res) {
     const username = req.body.username;
     const type = req.body.type;
 
+    getSpotifyTrack(0.5);
+    res.status(200).send("success");
+
     if (!username) {
         res.status(401).send("error invalid arguments");
         return;
     }
     if (connection) {
-        connection.emit("speech", "Hello " + username);
+        if (type !== "onDemand") {
+            connection.emit("speech", "Hello " + username);
+        }
         connection.emit("captureFrame");
     }
     res.status(200).send("success");
