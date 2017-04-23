@@ -14,9 +14,36 @@ var upload = multer({dest: './files/', limits: {fieldSize: 25 * 1024 * 1024}});
 
 var connection;
 var messageCall;
+var phone;
 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
+
+const getTracks = function () {
+    var request = require('request');
+
+    var headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer BQCiaIhAPm5PjsxlB6gUs7wmymaIUAZViSC3fe7anMD3m9dgdE2kZHFMLu0UKbfkWAKxsuy_iU633jux12rbpKVaWn43FCEcTEpXY2eiKM0IaYKeIicPGmCR0M8S4hglIj9EJImtlHWtXOdtnuwqxHeziDZa_RNF52dcIqSLBtPWE18Fn-hmK8gYSjG3VBzqYlVjb4hnR2jf1Le2Oq97ZXg5GtZzzb97N6bG4esB4LvmsSpdJtQ98h8ghXBCsXeN2pzoPDb_w07glPxczl4KYpR7dAWBDISHqYW9Jwi8rvh74ooTDLd-99A'
+    };
+
+    var options = {
+        url: 'https://api.spotify.com/v1/recommendations?market=GB&seed_tracks=0c6xIDDpzE81m2q797ordA&seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical,country&limit=1&target_valence=0.5',
+        headers: headers
+    };
+
+    function callback(error, response, body) {
+        const json = JSON.parse(body);
+        console.log(json.tracks[0].uri);
+        if (connection) {
+            connection.emit("spotify", uri);
+        }
+    }
+
+    request(options, callback);
+};
+
+getTracks();
 
 const twilioConfig = {
     accountSid: 'AC709939f7a39b9b9640f22213fedee8d5',
@@ -83,7 +110,7 @@ app.post('/twiml', function (req, res) {
 });
 
 app.post('/analyse', function (req, res) {
-    const phone = req.body.phone;
+    phone = "+" + req.body.phone;
     const username = req.body.username;
     const type = req.body.type;
 
@@ -91,7 +118,6 @@ app.post('/analyse', function (req, res) {
         res.status(401).send("error invalid arguments");
         return;
     }
-    console.log("ENTER req body: " + req.body);
     if (connection) {
         connection.emit("speech", "Hello " + username);
         connection.emit("captureFrame");
@@ -109,43 +135,10 @@ app.post('/capture', function (req, res) {
         res.status(401).send("error upload file");
         return;
     }
-
-    // const path = req.body.path;
-    // console.log(path);
-    // if (!path) {
-    //     res.status(401).send("error upload file");
-    //     return;
-    // }
-    // runScriptLearning(path);
     messageCall = text;
-    sendCall("+447814949215");
+    sendCall(phone);
     res.status(200).json('yeah');
-
-    // var upload = multer({dest: 'files/', limits: { fieldSize: 25 * 1024 * 1024 }}).single('file');
-    // upload(req, res, function (err) {
-    //     if (err || !req.body.file) {
-    //         console.log(err);
-    //         res.status(401).send("error upload file");
-    //         return;
-    //     }
-    //
-    //     const path = "./files/" + uuidV1() + ".tiff";
-    //
-    //     var base64Image = req.body.file.toString('base64');
-    //     var decodedImage = new Buffer(base64Image, 'base64');
-    //
-    //     // var base64Image = new Buffer(req.body.file).toString('base64');
-    //     fs.writeFile(path, decodedImage, function (err) {
-    //         if (err) {
-    //             res.status(500).json('error save image');
-    //             return console.log(err);
-    //         }
-    //         console.log("The file was saved!");
-    //         runScriptLearning(path);
-    //     });
-    //     res.status(200).json('yeah');
-    // });
-});
+ });
 
 app.post('/exit', function (req, res) {
     const phone = req.body.phone;
