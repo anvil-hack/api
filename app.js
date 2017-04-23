@@ -17,15 +17,16 @@ var connection;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const twilioConfig = {
+    accountSid: 'AC709939f7a39b9b9640f22213fedee8d5',
+    authToken: '05e442ca715e524460867cd67d954525'
+};
+const twilioClient = new twilio.RestClient(twilioConfig.accountSid, twilioConfig.authToken);
+
 const sendSms = function(phone, message) {
-    var accountSid = 'AC709939f7a39b9b9640f22213fedee8d5'; // Your Account SID from www.twilio.com/console
-    var authToken = '05e442ca715e524460867cd67d954525';   // Your Auth Token from www.twilio.com/console
-
-    var client = new twilio.RestClient(accountSid, authToken);
-
-    client.messages.create({
-        body: 'Hello from Node',
-        to: '+447933830904',  // Text this number
+    twilioClient.messages.create({
+        body: message,
+        to: phone,  // Text this number
         from: '+441513290272' // From a valid Twilio number
     }, function(err, message) {
         console.log(err);
@@ -34,20 +35,14 @@ const sendSms = function(phone, message) {
 };
 
 const sendCall = function(phone, message) {
-    var accountSid = 'AC709939f7a39b9b9640f22213fedee8d5'; // Your Account SID from www.twilio.com/console
-    var authToken = '05e442ca715e524460867cd67d954525';   // Your Auth Token from www.twilio.com/console
-
-    var client = new twilio.RestClient(accountSid, authToken);
-    client.calls.create({
+    twilioClient.calls.create({
         url: "http://178.62.14.170:4242/twiml",
-        to: "+447933830904",
+        to: phone,
         from: "+441513290272"
     }, function(err, call) {
         process.stdout.write(call.sid);
     });
 };
-
-//sendCall("", "");
 
 io.set('authorization', function (handshakeData, accept) {
     accept(null, true);
