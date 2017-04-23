@@ -30,7 +30,7 @@ const playTrack = function (track) {
         'Content-Type': 'application/json'
     };
 
-    var dataString = '{"uris":[' + track + ']}';
+    var dataString = '{"uris":[\"' + track + '\"]}';
 
     var options = {
         url: 'https://api.spotify.com/v1/me/player/play',
@@ -40,6 +40,7 @@ const playTrack = function (track) {
     };
 
     function callback(error, response, body) {
+        console.log(error);
         if (!error && response.statusCode == 200) {
             console.log(body);
         }
@@ -144,11 +145,7 @@ app.post('/analyse', function (req, res) {
     phone = "+" + req.body.phone;
     const username = req.body.username;
     const type = req.body.type;
-
-    getSpotifyTrack(0.5);
-    res.status(200).send("success");
-    return;
-
+    
     if (!username) {
         res.status(401).send("error invalid arguments");
         return;
