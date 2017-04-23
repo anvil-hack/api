@@ -43,8 +43,6 @@ const getTracks = function () {
     request(options, callback);
 };
 
-getTracks();
-
 const twilioConfig = {
     accountSid: 'AC709939f7a39b9b9640f22213fedee8d5',
     authToken: '05e442ca715e524460867cd67d954525'
